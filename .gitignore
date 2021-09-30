@@ -4,3 +4,15 @@
 #project output
 **/out
 
+#compiled version of the project
+**/target
+
+#module configuration files
+E-commerce-report-generator.iml
+e-commerce-report-generator.iml
+
+#folder information files
+.DS_Store
+
+
+
