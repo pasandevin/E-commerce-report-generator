@@ -1,4 +1,6 @@
-*/.idea
-*.DS_Store
-*/.DS_Store
-*/.out
+#user specific settings
+**/.idea
+
+#project output
+**/out
+
