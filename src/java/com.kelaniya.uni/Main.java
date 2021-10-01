@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+/*
         if (args.length == 0) {
             System.out.println("Please provide the arguments. ");
         }
@@ -80,8 +80,11 @@ public class Main {
 
         else{
             validated_input [4] = email_address;
-        }
+        }*/
+//Database connector starting here
 
+        DataRetrieving dataRetrieving = new DataRetrieving();
+        ArrayList<String[]> monthlyreport=dataRetrieving.displayData();
        
     }
 }
