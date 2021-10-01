@@ -3,7 +3,9 @@ package com.kelaniya.uni;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        DataRetrieving dataRetrieving = new DataRetrieving();
+        dataRetrieving.displayData();
     }
+
 
 }
