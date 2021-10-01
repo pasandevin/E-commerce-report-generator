@@ -1,6 +1,9 @@
 package com.kelaniya.uni;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -21,10 +24,9 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-/*
-        if (args.length == 0) {
+/*        if (args.length == 0) {
             System.out.println("Please provide the arguments. ");
         }
 
@@ -81,15 +83,18 @@ public class Main {
 
         else{
             validated_input [4] = email_address;
-        }*/
-//Database connector starting here
+        }
 
+ */
+
+        //Database connector starting here
         DataRetrieving dataRetrieving = new DataRetrieving();
         ArrayList<String[]> monthlyReport = dataRetrieving.displayData();
 
         ReportGeneration reportGeneration = new ReportGeneration(monthlyReport);
         ArrayList<String[]> finalList = reportGeneration.finalizeRows();
 
+        /*
         //print arrayList for testing purposes
         for (String[] row : finalList) {
             for (String x : row) {
@@ -97,6 +102,12 @@ public class Main {
             }
             System.out.println("");
         }
+        */
+
+        List<String[]> list = finalList;
+
+        CreateCsv createCsv = new CreateCsv();
+        createCsv.writeToCsvFile(list, new File("monthlySalesReport.csv"));
        
     }
 }
