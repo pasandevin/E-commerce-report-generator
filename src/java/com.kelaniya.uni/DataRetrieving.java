@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class DataRetrieving {
 
 
-    public void displayData() {
+    public ArrayList<String[]> displayData() {
+        ArrayList<String[]> allmonths = new ArrayList<String[]>();
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/report_generator", "root", "");
             Statement statement = connection.createStatement();
@@ -23,8 +24,8 @@ public class DataRetrieving {
             int startmonth = Integer.parseInt(String.valueOf(start.substring(5, 7)));
             int endmonth = Integer.parseInt(String.valueOf(end.substring(5, 7)));
 
-            ArrayList<String[]> allmonths = new ArrayList<String[]>();
-            System.out.println("Month\tTotal Revenue\tTotal Sales");
+
+            //System.out.println("Month\tTotal Revenue\tTotal Sales");
 
             for (int i = startmonth; i <= endmonth; i++) {
                 //Get data for each month
@@ -44,19 +45,19 @@ public class DataRetrieving {
 
             }
             //Print monthly report data
-            for (String[] m : allmonths) {
+           /* for (String[] m : allmonths) {
                 for (String x : m) {
                     System.out.print(x + "\t\t\t");
                 }
                 System.out.println("");
-            }
+            }*/
 
 
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-
+        return allmonths;
     }
 
 
