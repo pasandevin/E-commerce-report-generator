@@ -1,5 +1,6 @@
 package com.kelaniya.uni;
 
+import java.util.ArrayList;
 
 public class Main {
 
@@ -84,7 +85,18 @@ public class Main {
 //Database connector starting here
 
         DataRetrieving dataRetrieving = new DataRetrieving();
-        ArrayList<String[]> monthlyreport=dataRetrieving.displayData();
+        ArrayList<String[]> monthlyReport = dataRetrieving.displayData();
+
+        ReportGeneration reportGeneration = new ReportGeneration(monthlyReport);
+        ArrayList<String[]> finalList = reportGeneration.finalizeRows();
+
+        //print arrayList for testing purposes
+        for (String[] row : finalList) {
+            for (String x : row) {
+                System.out.printf("%15s", x);
+            }
+            System.out.println("");
+        }
        
     }
 }
