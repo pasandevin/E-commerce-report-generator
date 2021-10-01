@@ -37,9 +37,6 @@ public class Main {
         String[] validated_input = new String[5];
 
 
-
-
-
         //validate the type of report
         if (!(type.equals("monthly_sales") || type.equals("user_signup"))){
             System.out.println("please provide type of report as monthly_sales or user_signup");
@@ -50,7 +47,7 @@ public class Main {
         }
 
         //validate start date
-        if(isEmailValid(start_date)== false){
+        if(isDateValid(start_date)== false){
             System.out.println("Please enter start date in correct format yyyy-mm-dd ");
         }
 
@@ -60,12 +57,12 @@ public class Main {
 
 
         //validate start date
-        if(isEmailValid(end_date)== false){
+        if(isDateValid(end_date)== false){
             System.out.println("Please enter end date in correct format yyyy-mm-dd ");
         }
 
         else{
-            validated_input [1] = start_date;
+            validated_input [2] = end_date;
         }
 
             // validate the output method
@@ -76,38 +73,16 @@ public class Main {
             validated_input [3] = output_method;
         }
 
-
-        /*
-        // Creating array of string length
-        char[] ch = new char[email_address.length()];
-
-        // Copy character by character into array
-        for (int i = 0; i < email_address.length(); i++) {
-            ch[i] = email_address.charAt(i);
+        //validate email
+        if(isEmailValid(email_address)== false){
+            System.out.println("Please enter end date in correct format ex:- joe123@gmail ");
         }
 
-        int flag = 0;
-        for (int i = 0; i < email_address.length(); i++) {
-            if(ch[i]=='@'){
-                flag=1;
-            }
-        }
-
-        if(flag==0){
-            System.out.println("Please provide a valid email address");
-        }
-        else {
+        else{
             validated_input [4] = email_address;
         }
 
-        for(int i=0; i<5;i++){
-            System.out.println(validated_input[i]);
-        }*/
-
-
-
-
-
+       
     }
 }
 
