@@ -1,9 +1,12 @@
 package com.kelaniya.uni;
 
 import com.kelaniya.uni.input.CommandLineInputs;
+import com.kelaniya.uni.report.MonthlySalesReportGeneration;
+import com.kelaniya.uni.report.ReportGeneration;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Main {
@@ -19,24 +22,23 @@ public class Main {
             System.out.println(x);
         }
 
+        //connect database
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        Statement statement = databaseConnection.connect();
 
-        //getting data from starting date to end date
-        DataRetrieving dataRetrieving = new DataRetrieving(arguments[1], arguments[2]);
 
+        //create generic report
+        ReportGeneration reportGeneration = null;
 
-        ArrayList<String[]> reportData;
-        ArrayList<String[]> finalReportData;
-
-        reportData = dataRetrieving.getMonthlySalesReportData();
-        ReportGeneration reportGeneration = new ReportGeneration(reportData);
-        finalReportData = reportGeneration.finalizeMonthlySalesReportData();
-
-        /*
-        if(arguments[0] == "monthly_sales"){
-
+        //generate the report
+        if(arguments[0].equals("monthly_sales")){
+            reportGeneration = new MonthlySalesReportGeneration();
+        } else if(arguments[0].equals("user_signup")) {
+            //not yet implemented
         }
-         */
 
+        //getting the final report data to array list
+        ArrayList<String[]> finalReportData = reportGeneration.generate(statement, arguments[1], arguments[2]);
 
         /*
         //print report for testing purposes
@@ -48,6 +50,7 @@ public class Main {
         }
         */
 
+        //generate csv file
         CreateCsv createCsv = new CreateCsv();
         createCsv.writeToCsvFile(finalReportData, new File("monthlySalesReport.csv"));
        
