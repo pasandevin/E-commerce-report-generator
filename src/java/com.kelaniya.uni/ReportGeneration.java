@@ -9,7 +9,6 @@ public class ReportGeneration {
         this.monthlyData = monthlyData;
     }
 
-
     public Double totalRevenueCalculate() {
         Double totalRevenue = 0.0;
 
@@ -37,7 +36,7 @@ public class ReportGeneration {
     }
 
 
-    public ArrayList<String[]> finalizeRows() {
+    public ArrayList<String[]> finalizeMonthlySalesReportData() {
 
         ArrayList<String[]> finalList = new ArrayList<String[]>();
 
@@ -66,15 +65,5 @@ public class ReportGeneration {
 
         return finalList;
     }
-
-
-
-
-
-
-
-
-
-
 
 }
