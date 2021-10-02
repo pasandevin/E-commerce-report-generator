@@ -1,9 +1,11 @@
 package com.kelaniya.uni;
 
+import com.kelaniya.uni.email.EmailSender;
 import com.kelaniya.uni.input.CommandLineInputs;
 import com.kelaniya.uni.report.MonthlySalesReportGeneration;
 import com.kelaniya.uni.report.ReportGeneration;
 import com.kelaniya.uni.report.ReportGenerationFactory;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, UnirestException {
 
         //validate input arguments
         CommandLineInputs commandLineInputs = new CommandLineInputs(args);
@@ -19,9 +21,9 @@ public class Main {
 
 
         //print validated arguments for testing purposes
-        for(String x: arguments){
-            System.out.println(x);
-        }
+//        for(String x: arguments){
+//            System.out.println(x);
+//        }
 
         //connect database
         DatabaseConnection databaseConnection = new DatabaseConnection();
@@ -45,6 +47,10 @@ public class Main {
         //generate csv file
         CreateCsv createCsv = new CreateCsv();
         createCsv.writeToCsvFile(finalReportData, new File("monthlySalesReport.csv"));
+
+        //outputs
+        EmailSender emailsender = new EmailSender(arguments[0],arguments[4]);
+        emailsender.sendMail();
        
     }
 }

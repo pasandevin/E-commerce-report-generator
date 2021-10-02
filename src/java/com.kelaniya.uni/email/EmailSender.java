@@ -5,26 +5,34 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+
 import java.io.File;
 
 public class EmailSender {
 
     String reportType;
-    String emailReceiver;
+    String receiverEmail;
+    String filePath;
+    String emailSubject;
+    String emailBody;
 
-    public EmailSender(String reportType, String emailReceiver) {
+    public EmailSender(String reportType, String receiverEmail) {
 
         this.reportType = reportType;
-        this.emailReceiver = emailReceiver;
+        this.receiverEmail = receiverEmail;
+        this.filePath = "monthlySalesReport.csv";
 
+        EmailGenerator emailgenerator = new EmailGenerator(this.reportType,this.receiverEmail);
+        String[] emailData = emailgenerator.getEmailData();
+        this.emailSubject = emailData[0];
+        this.emailBody = emailData[1];
 
-        EmailGenerator emailgenerator = new EmailGenerator(reportType,emailReceiver);
-        emailgenerator.createmail();
     }
 
 
-    public static JsonNode sendmail() throws UnirestException {
 
+
+    public JsonNode sendMail() throws UnirestException {
 
 
         HttpResponse<JsonNode> request = Unirest.post(
@@ -40,17 +48,17 @@ public class EmailSender {
                 )
                 .queryString(
                         "to",
-                        "krishanshamod@gmail.com"
+                        this.receiverEmail
                 )
                 .queryString(
                         "subject",
-                        "java"
+                        this.emailSubject
                 )
                 .queryString(
-                        "text", "testing"
+                        "text", this.emailBody
                 )
-                .queryString("html", "<h1>Report</h1>")
-                .field("attachment", new File("monthlySalesReport.csv"))
+
+                .field("attachment", new File(this.filePath))
                 .asJson();
 
         return request.getBody();
