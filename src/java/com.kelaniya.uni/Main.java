@@ -2,12 +2,10 @@ package com.kelaniya.uni;
 
 import com.kelaniya.uni.email.EmailSender;
 import com.kelaniya.uni.input.CommandLineInputs;
-import com.kelaniya.uni.report.MonthlySalesReportGeneration;
 import com.kelaniya.uni.report.ReportGeneration;
 import com.kelaniya.uni.report.ReportGenerationFactory;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -45,8 +43,8 @@ public class Main {
         */
 
         //generate csv file
-        CreateCsv createCsv = new CreateCsv();
-        createCsv.writeToCsvFile(finalReportData, new File("monthlySalesReport.csv"));
+        CsvFileGenerator csvFileGenerator = new CsvFileGenerator();
+        csvFileGenerator.generate(finalReportData);
 
         //outputs
         EmailSender emailsender = new EmailSender(arguments[0],arguments[4]);
