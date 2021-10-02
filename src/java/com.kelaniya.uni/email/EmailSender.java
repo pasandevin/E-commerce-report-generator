@@ -7,9 +7,25 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.File;
 
-public class SendEmail {
+public class EmailSender {
 
-    public static JsonNode sendSimpleMessage() throws UnirestException {
+    String reportType;
+    String emailReceiver;
+
+    public EmailSender(String reportType, String emailReceiver) {
+
+        this.reportType = reportType;
+        this.emailReceiver = emailReceiver;
+
+
+        EmailGenerator emailgenerator = new EmailGenerator(reportType,emailReceiver);
+        emailgenerator.createmail();
+    }
+
+
+    public static JsonNode sendmail() throws UnirestException {
+
+
 
         HttpResponse<JsonNode> request = Unirest.post(
                 "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
@@ -24,7 +40,7 @@ public class SendEmail {
                 )
                 .queryString(
                         "to",
-                        "jayawardene.pasandevin@gmail.com"
+                        "krishanshamod@gmail.com"
                 )
                 .queryString(
                         "subject",
@@ -33,8 +49,8 @@ public class SendEmail {
                 .queryString(
                         "text", "testing"
                 )
-                .queryString("html", "<h1>Hello world</h1>")
-                .field("attachment", new File("/Users/pasandevin/Downloads/Notice for the students 2018.2019 Academic year examinations 30092021 copy.pdf"))
+                .queryString("html", "<h1>Report</h1>")
+                .field("attachment", new File("monthlySalesReport.csv"))
                 .asJson();
 
         return request.getBody();
