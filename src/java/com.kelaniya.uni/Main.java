@@ -1,102 +1,46 @@
 package com.kelaniya.uni;
 
+import com.kelaniya.uni.input.CommandLineInputs;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
-
-    //function of validating  email
-    static boolean isEmailValid(String email){
-
-
-        String regex ="^.+@.+$"; //joe123@gmail.com
-        return email.matches(regex);
-    }
-
-    //function of validating dates
-    static boolean isDateValid(String date){
-
-
-        String regex ="^[\\d]{4}-[\\d]{2}-[\\d]{2}$"; //2021-11-03
-        return date.matches(regex);
-    }
-
-
     public static void main(String[] args) throws IOException {
 
-/*        if (args.length == 0) {
-            System.out.println("Please provide the arguments. ");
+        //validate input arguments
+        CommandLineInputs commandLineInputs = new CommandLineInputs(args);
+        String[] arguments = commandLineInputs.validate();
+
+
+        //print validated arguments for testing purposes
+        for(String x: arguments){
+            System.out.println(x);
         }
 
 
-        String type = args[0];
-        String start_date = args[1];
-        String end_date = args[2];
-        String output_method = args[3];
-        String email_address = args[4];
-
-        String[] validated_input = new String[5];
+        //getting data from starting date to end date
+        DataRetrieving dataRetrieving = new DataRetrieving(arguments[1], arguments[2]);
 
 
-        //validate the type of report
-        if (!(type.equals("monthly_sales") || type.equals("user_signup"))){
-            System.out.println("please provide type of report as monthly_sales or user_signup");
-        }
-        else{
-            validated_input [0] = type;
+        ArrayList<String[]> reportData;
+        ArrayList<String[]> finalReportData;
 
-        }
-
-        //validate start date
-        if(isDateValid(start_date)== false){
-            System.out.println("Please enter start date in correct format yyyy-mm-dd ");
-        }
-
-        else{
-            validated_input [1] = start_date;
-        }
-
-
-        //validate start date
-        if(isDateValid(end_date)== false){
-            System.out.println("Please enter end date in correct format yyyy-mm-dd ");
-        }
-
-        else{
-            validated_input [2] = end_date;
-        }
-
-            // validate the output method
-        if (!(output_method.equals("email") || output_method.equals("file"))){
-            System.out.println("please provide out put method 'email' or 'file' ");
-        }
-        else {
-            validated_input [3] = output_method;
-        }
-
-        //validate email
-        if(isEmailValid(email_address)== false){
-            System.out.println("Please enter end date in correct format ex:- joe123@gmail ");
-        }
-
-        else{
-            validated_input [4] = email_address;
-        }
-
- */
-
-        //Database connector starting here
-        DataRetrieving dataRetrieving = new DataRetrieving();
-        ArrayList<String[]> monthlyReport = dataRetrieving.displayData();
-
-        ReportGeneration reportGeneration = new ReportGeneration(monthlyReport);
-        ArrayList<String[]> finalList = reportGeneration.finalizeRows();
+        reportData = dataRetrieving.getMonthlySalesReportData();
+        ReportGeneration reportGeneration = new ReportGeneration(reportData);
+        finalReportData = reportGeneration.finalizeMonthlySalesReportData();
 
         /*
-        //print arrayList for testing purposes
-        for (String[] row : finalList) {
+        if(arguments[0] == "monthly_sales"){
+
+        }
+         */
+
+
+        /*
+        //print report for testing purposes
+        for (String[] row : finalMonthlySalesReportData) {
             for (String x : row) {
                 System.out.printf("%15s", x);
             }
@@ -104,10 +48,8 @@ public class Main {
         }
         */
 
-        List<String[]> list = finalList;
-
         CreateCsv createCsv = new CreateCsv();
-        createCsv.writeToCsvFile(list, new File("monthlySalesReport.csv"));
+        createCsv.writeToCsvFile(finalReportData, new File("monthlySalesReport.csv"));
        
     }
 }
