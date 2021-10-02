@@ -10,36 +10,6 @@ public class MonthlySalesReportGeneration implements ReportGeneration{
 
         ArrayList<String[]> monthlyData = new ArrayList<String[]>();
 
-        try {
-            // Get the month Number here
-            int startingDateOfMonth = Integer.parseInt(String.valueOf(startDate.substring(5, 7)));
-            int endingDateOfMonth = Integer.parseInt(String.valueOf(endDate.substring(5, 7)));
-
-            for (int i = startingDateOfMonth; i <= endingDateOfMonth; i++) {
-                //Get data for each month
-                String montharr[] = new String[3];
-
-                ResultSet resultset = statement.executeQuery("SELECT SUM(price) AS revenue, COUNT(order_id) AS totsales FROM orders " +
-                        "WHERE date BETWEEN '" + startDate + "' AND '" + endDate + "' " +
-                        "AND MONTH(date)='" + i + "'");
-
-                if (resultset.next()) {
-                    montharr[0] = Integer.toString(i);
-                    montharr[1] = resultset.getString("revenue");
-                    montharr[2] = resultset.getString("totsales");
-                    monthlyData.add(montharr);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
-        ArrayList<String[]> finalList = new ArrayList<String[]>();
-
         //add first row to list
         String firstRow[] = new String[3];
 
@@ -47,12 +17,32 @@ public class MonthlySalesReportGeneration implements ReportGeneration{
         firstRow[1] = "Revenue";
         firstRow[2] = "Sales";
 
-        finalList.add(firstRow);
+        monthlyData.add(firstRow);
 
-        //add middle rows to list
-        for (String[] row : monthlyData) {
-            finalList.add(row);
+        try {
+            // Get the month Number here
+            int startingDateOfMonth = Integer.parseInt(String.valueOf(startDate.substring(5, 7)));
+            int endingDateOfMonth = Integer.parseInt(String.valueOf(endDate.substring(5, 7)));
+
+            for (int i = startingDateOfMonth; i <= endingDateOfMonth; i++) {
+                //Get data for each month
+                String monthArr[] = new String[3];
+
+                ResultSet resultset = statement.executeQuery("SELECT SUM(price) AS revenue, COUNT(order_id) AS totalSales FROM orders " +
+                        "WHERE date BETWEEN '" + startDate + "' AND '" + endDate + "' " +
+                        "AND MONTH(date)='" + i + "'");
+
+                if (resultset.next()) {
+                    monthArr[0] = Integer.toString(i);
+                    monthArr[1] = resultset.getString("revenue");
+                    monthArr[2] = resultset.getString("totalSales");
+                    monthlyData.add(monthArr);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
 
         //add last row to list
         String lastRow[] = new String[3];
@@ -61,9 +51,9 @@ public class MonthlySalesReportGeneration implements ReportGeneration{
         lastRow[1] = String.valueOf(TotalCalculation.calculate(monthlyData,1));
         lastRow[2] = String.valueOf((int)TotalCalculation.calculate(monthlyData,2));
 
-        finalList.add(lastRow);
+        monthlyData.add(lastRow);
 
-        return finalList;
+        return monthlyData;
     }
 
 }

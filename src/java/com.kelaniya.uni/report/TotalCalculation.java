@@ -11,7 +11,9 @@ public abstract class TotalCalculation {
             if(data[column] == null) {
                 data[column] = String.valueOf(0);
             }
-            total += Double.parseDouble(data[column]);
+            else if(DoubleNumberValidation.isDouble(data[column])) {
+                total += Double.parseDouble(data[column]);
+            }
         }
 
         return total;
