@@ -24,7 +24,7 @@ public class CommandLineInputs {
 
         //validate the type of report
         if (!(type.equals("monthly_sales") || type.equals("user_signup"))) {
-            System.out.println("please provide type of report as monthly_sales or user_signup");
+            System.out.println("Please provide type of report as monthly_sales or user_signup");
         } else {
             validated_input[0] = type;
         }

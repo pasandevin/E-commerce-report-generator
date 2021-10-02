@@ -1,4 +1,4 @@
-package com.kelaniya.uni;
+package com.kelaniya.uni.report;
 
 import java.util.ArrayList;
 
