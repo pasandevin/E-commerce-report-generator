@@ -1,42 +1,42 @@
 package com.kelaniya.uni.report;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ReportGeneration {
-    ArrayList<String[]> monthlyData;
+public class MonthlySalesReportGeneration implements ReportGeneration{
 
-    public ReportGeneration(ArrayList<String[]> monthlyData) {
-        this.monthlyData = monthlyData;
-    }
+    public ArrayList<String[]> generate(Statement statement, String startDate, String endDate) {
 
-    public Double totalRevenueCalculate() {
-        Double totalRevenue = 0.0;
+        ArrayList<String[]> monthlyData = new ArrayList<String[]>();
 
-        for (String[] data : monthlyData) {
+        try {
+            // Get the month Number here
+            int startingDateOfMonth = Integer.parseInt(String.valueOf(startDate.substring(5, 7)));
+            int endingDateOfMonth = Integer.parseInt(String.valueOf(endDate.substring(5, 7)));
 
-            if(data[1] == null) {
-                data[1] = String.valueOf(0);
+            for (int i = startingDateOfMonth; i <= endingDateOfMonth; i++) {
+                //Get data for each month
+                String montharr[] = new String[3];
+
+                ResultSet resultset = statement.executeQuery("SELECT SUM(price) AS revenue, COUNT(order_id) AS totsales FROM orders " +
+                        "WHERE date BETWEEN '" + startDate + "' AND '" + endDate + "' " +
+                        "AND MONTH(date)='" + i + "'");
+
+                if (resultset.next()) {
+                    montharr[0] = Integer.toString(i);
+                    montharr[1] = resultset.getString("revenue");
+                    montharr[2] = resultset.getString("totsales");
+                    monthlyData.add(montharr);
+                }
             }
-
-            totalRevenue += Double.parseDouble(data[1]);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return totalRevenue;
-    }
 
 
-    public int totalSalesCalculate() {
-        int totalSales = 0;
 
-        for (String[] data : monthlyData) {
-            totalSales += Integer.parseInt(data[2]);
-        }
-
-        return totalSales;
-    }
-
-
-    public ArrayList<String[]> finalizeMonthlySalesReportData() {
 
         ArrayList<String[]> finalList = new ArrayList<String[]>();
 
@@ -58,8 +58,8 @@ public class ReportGeneration {
         String lastRow[] = new String[3];
 
         lastRow[0] = "Total";
-        lastRow[1] = String.valueOf(totalRevenueCalculate());
-        lastRow[2] = String.valueOf(totalSalesCalculate());
+        lastRow[1] = String.valueOf(TotalCalculation.calculate(monthlyData,1));
+        lastRow[2] = String.valueOf((int)TotalCalculation.calculate(monthlyData,2));
 
         finalList.add(lastRow);
 
