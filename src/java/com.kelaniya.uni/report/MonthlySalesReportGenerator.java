@@ -5,17 +5,16 @@ import com.kelaniya.uni.repository.MonthlySalesReportSqlDataRetriever;
 
 import java.util.ArrayList;
 
-public class MonthlySalesReportGeneration implements ReportGeneration{
+public class MonthlySalesReportGenerator implements ReportGenerator {
 
     public ArrayList<String[]> generate(String startDate, String endDate) {
 
         DataRetriever dataRetriever = new MonthlySalesReportSqlDataRetriever();
         ArrayList<String[]> middleData = dataRetriever.retrieve(startDate, endDate);
-
         ArrayList<String[]> monthlyData = new ArrayList<String[]>();
 
         //add first row to list
-        String firstRow[] = new String[3];
+        String[] firstRow = new String[3];
 
         firstRow[0] = "Month";
         firstRow[1] = "Revenue";
@@ -30,11 +29,11 @@ public class MonthlySalesReportGeneration implements ReportGeneration{
 
 
         //add last row to list
-        String lastRow[] = new String[3];
+        String[] lastRow = new String[3];
 
         lastRow[0] = "Total";
-        lastRow[1] = String.valueOf(TotalCalculation.calculate(monthlyData,1));
-        lastRow[2] = String.valueOf((int)TotalCalculation.calculate(monthlyData,2));
+        lastRow[1] = String.valueOf(TotalCalculator.calculate(monthlyData, 1));
+        lastRow[2] = String.valueOf((int) TotalCalculator.calculate(monthlyData, 2));
 
         monthlyData.add(lastRow);
 

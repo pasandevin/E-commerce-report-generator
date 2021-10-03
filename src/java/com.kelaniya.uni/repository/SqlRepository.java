@@ -8,11 +8,16 @@ public class SqlRepository {
 
     Statement statement = null;
 
-    public SqlRepository(){
+    public SqlRepository() {
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/report_generator", "root", "");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/report_generator",
+                    "root",
+                    "");
+
             statement = connection.createStatement();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

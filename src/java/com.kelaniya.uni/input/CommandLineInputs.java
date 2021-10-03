@@ -30,14 +30,14 @@ public class CommandLineInputs implements Inputs {
         }
 
         //validate start date
-        if (DateValidation.isDateValid(start_date) == false) {
+        if (DataValidator.isDateValid(start_date) == false) {
             System.out.println("Please enter start date in correct format yyyy-mm-dd ");
         } else {
             validated_input[1] = start_date;
         }
 
         //validate start date
-        if (DateValidation.isDateValid(end_date) == false) {
+        if (DataValidator.isDateValid(end_date) == false) {
             System.out.println("Please enter end date in correct format yyyy-mm-dd ");
         } else {
             validated_input[2] = end_date;
@@ -51,7 +51,7 @@ public class CommandLineInputs implements Inputs {
         }
 
         //validate email
-        if (EmailValidation.isEmailValid(email_address) == false) {
+        if (EmailValidator.isEmailValid(email_address) == false) {
             System.out.println("Please enter end date in correct format ex:- joe123@gmail ");
         } else {
             validated_input[4] = email_address;

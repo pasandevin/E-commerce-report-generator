@@ -19,7 +19,7 @@ public class EmailGenerator {
         this.emailSubject = this.reportType;
         this.emailBody = "Hello " + receiverEmail + ", \nHere is your requested report.\nThank you\nElectron Inc.";
 
-        return new String[] { this.emailSubject, this.emailBody};
+        return new String[]{this.emailSubject, this.emailBody};
     }
 
 

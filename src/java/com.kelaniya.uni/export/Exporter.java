@@ -5,6 +5,6 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public interface Exporter {
 
-    public JsonNode export() throws UnirestException;
+    JsonNode export() throws UnirestException;
 
 }

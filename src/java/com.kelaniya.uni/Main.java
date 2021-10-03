@@ -1,17 +1,14 @@
 package com.kelaniya.uni;
 
-import com.kelaniya.uni.fileGenerator.CsvFileGenerator;
-import com.kelaniya.uni.export.Exporter;
 import com.kelaniya.uni.export.ExporterFactory;
+import com.kelaniya.uni.fileGenerator.CsvFileGenerator;
 import com.kelaniya.uni.fileGenerator.FileGenerator;
 import com.kelaniya.uni.input.CommandLineInputs;
 import com.kelaniya.uni.input.Inputs;
-import com.kelaniya.uni.report.ReportGeneration;
 import com.kelaniya.uni.report.ReportGenerationFactory;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException, UnirestException {
@@ -20,11 +17,16 @@ public class Main {
         ReportGenerationFactory reportGenerationFactory = new ReportGenerationFactory();
         FileGenerator fileGenerator = new CsvFileGenerator();
         ExporterFactory exporterFactory = new ExporterFactory();
-        ReportGeneratorApp reportGeneratorApp = new ReportGeneratorApp(inputs, reportGenerationFactory, fileGenerator, exporterFactory);
+
+        ReportGeneratorApp reportGeneratorApp = new ReportGeneratorApp(
+                inputs,
+                reportGenerationFactory,
+                fileGenerator,
+                exporterFactory);
 
         //executing the application
         reportGeneratorApp.execute();
-       
+
     }
 }
 

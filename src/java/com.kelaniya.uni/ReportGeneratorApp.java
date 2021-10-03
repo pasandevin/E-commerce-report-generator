@@ -4,8 +4,8 @@ import com.kelaniya.uni.export.Exporter;
 import com.kelaniya.uni.export.ExporterFactory;
 import com.kelaniya.uni.fileGenerator.FileGenerator;
 import com.kelaniya.uni.input.Inputs;
-import com.kelaniya.uni.report.ReportGeneration;
 import com.kelaniya.uni.report.ReportGenerationFactory;
+import com.kelaniya.uni.report.ReportGenerator;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.IOException;
@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 public class ReportGeneratorApp {
 
-    private Inputs inputs;
-    private ReportGenerationFactory reportGenerationFactory;
-    private FileGenerator fileGenerator;
-    private ExporterFactory exporterFactory;
+    private final Inputs inputs;
+    private final ReportGenerationFactory reportGenerationFactory;
+    private final FileGenerator fileGenerator;
+    private final ExporterFactory exporterFactory;
 
     public ReportGeneratorApp(
             Inputs inputs,
@@ -42,7 +42,7 @@ public class ReportGeneratorApp {
         String outputMethod = arguments[3];
         String receiverEmail = arguments[4];
 
-        ReportGeneration reportGeneration = reportGenerationFactory.getInstance(reportType);
+        ReportGenerator reportGeneration = reportGenerationFactory.getInstance(reportType);
         ArrayList<String[]> finalReportData = reportGeneration.generate(reportStartDate, reportEndDate);
         fileGenerator.generate(finalReportData);
         Exporter exporter = exporterFactory.getInstance(outputMethod, reportType, receiverEmail);

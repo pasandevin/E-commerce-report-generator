@@ -5,7 +5,6 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-
 import java.io.File;
 
 public class EmailExporter implements Exporter {
@@ -24,13 +23,12 @@ public class EmailExporter implements Exporter {
         this.emailSubject = emailSubject;
         this.emailBody = emailBody;
 
-
     }
 
     public JsonNode export() throws UnirestException {
 
         HttpResponse<JsonNode> request = Unirest.post(
-                "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
+                        "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
                 )
                 .basicAuth(
                         "api",

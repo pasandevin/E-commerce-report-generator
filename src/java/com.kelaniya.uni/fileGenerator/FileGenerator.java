@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface FileGenerator {
 
-    public void generate(List<String[]> csvData) throws IOException;
+    void generate(List<String[]> csvData) throws IOException;
 
 }

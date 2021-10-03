@@ -1,12 +1,11 @@
 package com.kelaniya.uni.report;
 
 import com.kelaniya.uni.repository.DataRetriever;
-import com.kelaniya.uni.repository.MonthlySalesReportSqlDataRetriever;
 import com.kelaniya.uni.repository.UserSignupReportSqlDataRetriever;
 
 import java.util.ArrayList;
 
-public class UserSignupReportGeneration implements ReportGeneration{
+public class UserSignupReportGenerator implements ReportGenerator {
 
     public ArrayList<String[]> generate(String startDate, String endDate) {
 
@@ -16,7 +15,7 @@ public class UserSignupReportGeneration implements ReportGeneration{
         ArrayList<String[]> allSignup = new ArrayList<String[]>();
 
         //add first row to list
-        String firstRow[] = new String[3];
+        String[] firstRow = new String[3];
 
         firstRow[0] = "Name";
         firstRow[1] = "City";
@@ -28,10 +27,6 @@ public class UserSignupReportGeneration implements ReportGeneration{
         for (String[] row : middleData) {
             allSignup.add(row);
         }
-
-
-    //Last row deleted
-
 
         return allSignup;
     }
