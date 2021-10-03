@@ -8,7 +8,7 @@ import java.util.List;
 public class CsvFileGenerator {
 
     public void generate(List<String[]> csvData) throws IOException {
-        try (CSVWriter writer = new CSVWriter(new FileWriter("monthlySalesReport.csv"))) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter("Report.csv"))) {
             writer.writeAll(csvData);
         }
     }
