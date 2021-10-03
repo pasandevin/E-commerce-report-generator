@@ -9,8 +9,8 @@ public class ExporterFactory {
         Exporter exporter = null;
 
         if (exportMethod.equals("email")) {
-            EmailGenerator emailGenerator = new EmailGenerator(reportType, email);
-            String[] emailContents = emailGenerator.getEmailData();
+            EmailGenerator reportEmailGenerator = new ReportEmailGenerator(reportType, email);
+            String[] emailContents = reportEmailGenerator.getEmailData();
             String emailSubject = emailContents[0];
             String emailBody = emailContents[1];
 
