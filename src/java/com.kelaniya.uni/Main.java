@@ -15,31 +15,15 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException, UnirestException {
-
-        //validate input arguments
+        //creating objects
         Inputs inputs = new CommandLineInputs(args);
-        String[] arguments = inputs.validate();
-
-        String reportType = arguments[0];
-        String reportStartDate = arguments[1];
-        String reportEndDate = arguments[2];
-        String outputMethod = arguments[3];
-        String receiverEmail = arguments[4];
-
-        //getting the final report data to array list
         ReportGenerationFactory reportGenerationFactory = new ReportGenerationFactory();
-        ReportGeneration reportGeneration = reportGenerationFactory.getInstance(reportType);
-        ArrayList<String[]> finalReportData = reportGeneration.generate(reportStartDate, reportEndDate);
-
-        //generate file
         FileGenerator fileGenerator = new CsvFileGenerator();
-        fileGenerator.generate(finalReportData);
-
-        //export generated file
         ExporterFactory exporterFactory = new ExporterFactory();
-        Exporter exporter = exporterFactory.getInstance(outputMethod, reportType, receiverEmail);
-        exporter.export();
+        ReportGeneratorApp reportGeneratorApp = new ReportGeneratorApp(inputs, reportGenerationFactory, fileGenerator, exporterFactory);
 
+        //executing the application
+        reportGeneratorApp.execute();
        
     }
 }
