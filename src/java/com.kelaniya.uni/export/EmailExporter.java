@@ -28,15 +28,15 @@ public class EmailExporter implements Exporter {
     public JsonNode export() throws UnirestException {
 
         HttpResponse<JsonNode> request = Unirest.post(
-                        "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
+                        "https://api.mailgun.net/v3/" + "sandboxfebcf87b6680495995110a0f85da82a2.mailgun.org" + "/messages"
                 )
                 .basicAuth(
                         "api",
-                        "408171ac6e719e1b236de77c3aefbcff-dbdfb8ff-38e35d46"
+                        "022831441538e27d28f5103b1aee0a82-dbdfb8ff-8b748728"
                 )
                 .queryString(
                         "from",
-                        "Excited User <pasandevin@sandboxf632d3f500664c9187a03a44da46b023.mailgun.org>"
+                        "Electron <electron@shop.com>"
                 )
                 .queryString(
                         "to",
