@@ -1,14 +1,14 @@
-package com.kelaniya.uni;
+package com.kelaniya.uni.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DatabaseConnection {
+public class SqlRepository {
 
-    public Statement connect(){
+    Statement statement = null;
 
-        Statement statement = null;
+    public SqlRepository(){
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/report_generator", "root", "");
@@ -16,7 +16,6 @@ public class DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return statement;
     }
+
 }
