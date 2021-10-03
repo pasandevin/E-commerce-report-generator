@@ -1,4 +1,4 @@
-package com.kelaniya.uni.email;
+package com.kelaniya.uni.export;
 
 public class EmailGenerator {
 

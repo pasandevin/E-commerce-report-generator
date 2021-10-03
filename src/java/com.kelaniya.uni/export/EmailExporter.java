@@ -8,7 +8,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 import java.io.File;
 
-public class EmailSender {
+public class EmailExporter implements Exporter {
 
     String reportType;
     String receiverEmail;
@@ -16,21 +16,18 @@ public class EmailSender {
     String emailSubject;
     String emailBody;
 
-    public EmailSender(String reportType, String receiverEmail, String emailSubject, String emailBody) {
+    public EmailExporter(String reportType, String receiverEmail, String emailSubject, String emailBody) {
 
         this.reportType = reportType;
         this.receiverEmail = receiverEmail;
-        this.filePath = "monthlySalesReport.csv";
+        this.filePath = "Report.csv";
         this.emailSubject = emailSubject;
         this.emailBody = emailBody;
 
 
     }
 
-
-
-
-    public JsonNode sendMail() throws UnirestException {
+    public JsonNode export() throws UnirestException {
 
         HttpResponse<JsonNode> request = Unirest.post(
                 "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
