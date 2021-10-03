@@ -1,7 +1,9 @@
 package com.kelaniya.uni;
 
+import com.kelaniya.uni.fileGenerator.CsvFileGenerator;
 import com.kelaniya.uni.export.Exporter;
 import com.kelaniya.uni.export.ExporterFactory;
+import com.kelaniya.uni.fileGenerator.FileGenerator;
 import com.kelaniya.uni.input.CommandLineInputs;
 import com.kelaniya.uni.input.Inputs;
 import com.kelaniya.uni.report.ReportGeneration;
@@ -29,10 +31,9 @@ public class Main {
         ReportGeneration reportGeneration = reportGenerationFactory.getInstance(reportType);
         ArrayList<String[]> finalReportData = reportGeneration.generate(reportStartDate, reportEndDate);
 
-        //generate csv file
-        CsvFileGenerator csvFileGenerator = new CsvFileGenerator();
-        csvFileGenerator.generate(finalReportData);
-
+        //generate file
+        FileGenerator fileGenerator = new CsvFileGenerator();
+        fileGenerator.generate(finalReportData);
 
         //export generated file
         ExporterFactory exporterFactory = new ExporterFactory();
