@@ -1,12 +1,16 @@
 package com.kelaniya.uni.report;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
+import com.kelaniya.uni.repository.DataRetriever;
+import com.kelaniya.uni.repository.MonthlySalesReportSqlDataRetriever;
+
 import java.util.ArrayList;
 
 public class MonthlySalesReportGeneration implements ReportGeneration{
 
-    public ArrayList<String[]> generate(Statement statement, String startDate, String endDate) {
+    public ArrayList<String[]> generate(String startDate, String endDate) {
+
+        DataRetriever dataRetriever = new MonthlySalesReportSqlDataRetriever();
+        ArrayList<String[]> middleData = dataRetriever.retrieve(startDate, endDate);
 
         ArrayList<String[]> monthlyData = new ArrayList<String[]>();
 
@@ -19,28 +23,9 @@ public class MonthlySalesReportGeneration implements ReportGeneration{
 
         monthlyData.add(firstRow);
 
-        try {
-            // Get the month Number here
-            int startingDateOfMonth = Integer.parseInt(String.valueOf(startDate.substring(5, 7)));
-            int endingDateOfMonth = Integer.parseInt(String.valueOf(endDate.substring(5, 7)));
-
-            for (int i = startingDateOfMonth; i <= endingDateOfMonth; i++) {
-                //Get data for each month
-                String monthArr[] = new String[3];
-
-                ResultSet resultset = statement.executeQuery("SELECT SUM(price) AS revenue, COUNT(order_id) AS totalSales FROM orders " +
-                        "WHERE date BETWEEN '" + startDate + "' AND '" + endDate + "' " +
-                        "AND MONTH(date)='" + i + "'");
-
-                if (resultset.next()) {
-                    monthArr[0] = Integer.toString(i);
-                    monthArr[1] = resultset.getString("revenue");
-                    monthArr[2] = resultset.getString("totalSales");
-                    monthlyData.add(monthArr);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        //add middle rows to list
+        for (String[] row : middleData) {
+            monthlyData.add(row);
         }
 
 
