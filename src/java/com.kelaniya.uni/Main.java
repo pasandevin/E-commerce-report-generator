@@ -1,6 +1,7 @@
 package com.kelaniya.uni;
 
 import com.kelaniya.uni.email.EmailSender;
+import com.kelaniya.uni.email.EmailGenerator;
 import com.kelaniya.uni.input.CommandLineInputs;
 import com.kelaniya.uni.report.ReportGeneration;
 import com.kelaniya.uni.report.ReportGenerationFactory;
@@ -9,6 +10,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.IOException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) throws IOException, UnirestException {
@@ -16,6 +18,12 @@ public class Main {
         //validate input arguments
         CommandLineInputs commandLineInputs = new CommandLineInputs(args);
         String[] arguments = commandLineInputs.validate();
+
+        String reportType = arguments[0];
+        String reportStartDate = arguments[1];
+        String reportEndDate = arguments[2];
+        String outputMethod = arguments[3];
+        String receiverEmail = arguments[4];
 
 
         //print validated arguments for testing purposes
@@ -29,8 +37,8 @@ public class Main {
 
         //getting the final report data to array list
         ReportGenerationFactory reportGenerationFactory = new ReportGenerationFactory();
-        ReportGeneration reportGeneration = reportGenerationFactory.getInstance(arguments[0]);
-        ArrayList<String[]> finalReportData = reportGeneration.generate(statement, arguments[1], arguments[2]);
+        ReportGeneration reportGeneration = reportGenerationFactory.getInstance(reportType);
+        ArrayList<String[]> finalReportData = reportGeneration.generate(statement, reportStartDate, reportEndDate);
 
         /*
         //print report for testing purposes
@@ -47,8 +55,18 @@ public class Main {
         csvFileGenerator.generate(finalReportData);
 
         //outputs
-        EmailSender emailsender = new EmailSender(arguments[0],arguments[4]);
-        emailsender.sendMail();
+
+        if (Objects.equals(outputMethod, "email")) {
+            EmailGenerator emailGenerator = new EmailGenerator(reportType,receiverEmail);
+            String [] emailContents = emailGenerator.getEmailData();
+            String emailSubject = emailContents[0];
+            String emailBody = emailContents[1];
+
+            EmailSender emailsender = new EmailSender(reportType,receiverEmail, emailSubject, emailBody);
+            emailsender.sendMail();
+
+        }
+
        
     }
 }

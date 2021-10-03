@@ -16,16 +16,14 @@ public class EmailSender {
     String emailSubject;
     String emailBody;
 
-    public EmailSender(String reportType, String receiverEmail) {
+    public EmailSender(String reportType, String receiverEmail, String emailSubject, String emailBody) {
 
         this.reportType = reportType;
         this.receiverEmail = receiverEmail;
         this.filePath = "monthlySalesReport.csv";
+        this.emailSubject = emailSubject;
+        this.emailBody = emailBody;
 
-        EmailGenerator emailgenerator = new EmailGenerator(this.reportType,this.receiverEmail);
-        String[] emailData = emailgenerator.getEmailData();
-        this.emailSubject = emailData[0];
-        this.emailBody = emailData[1];
 
     }
 
@@ -33,7 +31,6 @@ public class EmailSender {
 
 
     public JsonNode sendMail() throws UnirestException {
-
 
         HttpResponse<JsonNode> request = Unirest.post(
                 "https://api.mailgun.net/v3/" + "sandboxf632d3f500664c9187a03a44da46b023.mailgun.org" + "/messages"
