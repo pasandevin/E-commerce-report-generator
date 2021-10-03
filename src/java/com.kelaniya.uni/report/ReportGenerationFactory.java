@@ -10,7 +10,7 @@ public class ReportGenerationFactory {
         if(arguments.equals("monthly_sales")){
             reportGeneration = new MonthlySalesReportGeneration();
         } else if(arguments.equals("user_signup")) {
-            //not yet implemented
+            reportGeneration = new UserSignupReportGeneration();
         }
 
         return reportGeneration;
