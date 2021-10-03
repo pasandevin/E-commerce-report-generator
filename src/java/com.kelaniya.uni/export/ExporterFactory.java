@@ -17,6 +17,7 @@ public class ExporterFactory {
             exporter = new EmailExporter(reportType, email, emailSubject, emailBody);
             exporter.export();
 
+
         }
 
         return exporter;
